@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Dashboard (Observer Node)</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --primary: #8b5cf6;
+            /* Purple for Observer */
+            --accent: #38bdf8;
+            --text: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+
+        .status-badge {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: #064e3b;
+            color: #34d399;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .shards-view {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .shard-column {
+            background: var(--card);
+            border-radius: 1rem;
+            padding: 1rem;
+            min-height: 500px;
+            border: 1px solid #334155;
+        }
+
+        .shard-header {
+            text-align: center;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #334155;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .block {
+            background: #334155;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.7rem;
+            font-family: 'Courier New', monospace;
+            border-left: 3px solid var(--primary);
+            animation: fadeIn 0.5s;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="status-badge">CONNECTED TO VOTING NODE</div>
+    <h1>Live Vote Distribution (Observer Node)</h1>
+
+    <div
+        style="width: 100%; max-width: 800px; margin-bottom: 3rem; background: var(--card); padding: 2rem; border-radius: 1rem; border: 1px solid #334155;">
+        <h2
+            style="color: var(--accent); margin-top: 0; border-bottom: 1px solid #334155; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+            Election Results Graph</h2>
+        <div id="graphContainer">
+            <!-- Graph rendered here -->
+        </div>
+    </div>
+
+    <div class="shards-view" id="shardsContainer">
+        <!-- Shards rendered here -->
+    </div>
+
+    <script>
+        const ALL_CANDIDATES = [
+            "Candidate A", "Candidate B", "Candidate C", "Candidate D",
+            "Candidate E", "Candidate F", "Candidate G"
+        ];
+
+        async function updateStatus() {
+            try {
+                const res = await fetch('/status_proxy');
+                const data = await res.json();
+                renderShards(data.shards);
+
+                const tallyRes = await fetch('/tally_proxy');
+                const tallyData = await tallyRes.json();
+                renderGraph(tallyData.tally);
+            } catch (e) {
+                console.error("Connection lost");
+            }
+        }
+
+        function renderGraph(tallyData) {
+            const container = document.getElementById('graphContainer');
+            container.innerHTML = '';
+
+            // 1. Merge live data with default candidates
+            const counts = {};
+            ALL_CANDIDATES.forEach(c => counts[c] = 0);
+
+            if (tallyData) {
+                tallyData.forEach(item => {
+                    if (counts.hasOwnProperty(item.candidate)) {
+                        counts[item.candidate] = item.count;
+                    }
+                });
+            }
+
+            // 2. Calculate scale
+            const maxVal = Math.max(...Object.values(counts), 10); // Minimum scale of 10
+
+            // 3. Render Bars
+            ALL_CANDIDATES.forEach(candidate => {
+                const count = counts[candidate];
+                const percentage = (count / maxVal) * 100;
+
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.alignItems = 'center';
+                row.style.marginBottom = '1rem';
+
+                row.innerHTML = `
+                    <div style="width: 120px; font-weight: 600; font-size: 0.9rem;">${candidate}</div>
+                    <div style="flex-grow: 1; background: #0f172a; height: 24px; border-radius: 12px; overflow: hidden; margin: 0 1rem; border: 1px solid #334155;">
+                        <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.5s ease-out;"></div>
+                    </div>
+                    <div style="width: 40px; text-align: right; font-weight: bold; color: var(--accent);">${count}</div>
+                `;
+
+                container.appendChild(row);
+            });
+        }
+
+        function renderShards(shards) {
+            const container = document.getElementById('shardsContainer');
+            container.innerHTML = '';
+
+            if (!shards || shards.length === 0) {
+                container.innerHTML = '<p style="text-align:center; width:100%">Waiting for Voting Node...</p>';
+                return;
+            }
+
+            shards.forEach(shard => {
+                const col = document.createElement('div');
+                col.className = 'shard-column';
+
+                const header = document.createElement('div');
+                header.className = 'shard-header';
+                header.innerText = `Shard ${shard.id} • ${shard.blocks} Blocks`;
+                col.appendChild(header);
+
+                for (let i = 0; i < shard.blocks; i++) {
+                    const block = document.createElement('div');
+                    block.className = 'block';
+                    block.innerText = i === 0 ? 'GENESIS' : `BLOCK #${i} [SHA-256]`;
+                    col.appendChild(block);
+                }
+
+                container.appendChild(col);
+            });
+        }
+
+        // Initial load and polling
+        updateStatus();
+        setInterval(updateStatus, 1000);
+    </script>
+</body>
+
+</html>

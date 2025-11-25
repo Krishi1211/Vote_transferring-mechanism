@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Vote-Transfer System</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --primary: #3b82f6;
+            --accent: #10b981;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .control-panel {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg);
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .shards-view {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .shard-column {
+            background: var(--card);
+            border-radius: 1rem;
+            padding: 1rem;
+            min-height: 400px;
+        }
+
+        .shard-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .block {
+            background: #334155;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            font-family: monospace;
+            border-left: 3px solid var(--primary);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .status-log {
+            margin-top: 1rem;
+
+            < !DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Secure Vote-Transfer System</title><style> :root {
+                --bg: #0f172a;
+                --card: #1e293b;
+                --primary: #3b82f6;
+                --accent: #10b981;
+                --text: #f8fafc;
+                --text-dim: #94a3b8;
+            }
+
+            body {
+                font-family: 'Inter', system-ui, sans-serif;
+                background-color: var(--bg);
+                color: var(--text);
+                margin: 0;
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            h1 {
+                font-weight: 800;
+                background: linear-gradient(to right, var(--primary), var(--accent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 2rem;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 1200px;
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                gap: 2rem;
+            }
+
+            .control-panel {
+                background: var(--card);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                height: fit-content;
+            }
+
+            .input-group {
+                margin-bottom: 1rem;
+            }
+
+            label {
+                display: block;
+                color: var(--text-dim);
+                margin-bottom: 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            input {
+                width: 100%;
+                padding: 0.75rem;
+                background: var(--bg);
+                border: 1px solid #334155;
+                border-radius: 0.5rem;
+                color: white;
+                box-sizing: border-box;
+            }
+
+            button {
+                width: 100%;
+                padding: 0.75rem;
+                background: var(--primary);
+                color: white;
+                border: none;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: opacity 0.2s;
+            }
+
+            button:hover {
+                opacity: 0.9;
+            }
+
+            .shards-view {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+            }
+
+            .shard-column {
+                background: var(--card);
+                border-radius: 1rem;
+                padding: 1rem;
+                min-height: 400px;
+            }
+
+            .shard-header {
+                text-align: center;
+                font-weight: 600;
+                color: var(--accent);
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid #334155;
+            }
+
+            .block {
+                background: #334155;
+                padding: 0.75rem;
+                border-radius: 0.5rem;
+                margin-bottom: 0.5rem;
+                font-size: 0.75rem;
+                font-family: monospace;
+                border-left: 3px solid var(--primary);
+                animation: slideIn 0.3s ease-out;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-10px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .status-log {
+                margin-top: 1rem;
+                color: var(--text-dim);
+                font-size: 0.875rem;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container"
+        style="display: flex; justify-content: center; align-items: center; height: 100vh; grid-template-columns: 1fr;">
+        <div class="control-panel" style="width: 100%; max-width: 400px; text-align: center;">
+            <h1 style="margin-bottom: 0.5rem;">Official Ballot</h1>
+            <p style="color: var(--text-dim); margin-bottom: 2rem;">Secure Blockchain Voting System</p>
+
+            <div class="input-group" style="text-align: left;">
+                <label>Voter ID</label>
+                <input type="number" id="voterId" value="1001">
+            </div>
+            <div class="input-group" style="text-align: left;">
+                <label>Select Candidate</label>
+                <select id="voteContent"
+                    style="width: 100%; padding: 0.75rem; background: var(--bg); border: 1px solid #334155; border-radius: 0.5rem; color: white;">
+                    <option value="Candidate A">Candidate A</option>
+                    <option value="Candidate B">Candidate B</option>
+                    <option value="Candidate C">Candidate C</option>
+                    <option value="Candidate D">Candidate D</option>
+                    <option value="Candidate E">Candidate E</option>
+                    <option value="Candidate F">Candidate F</option>
+                    <option value="Candidate G">Candidate G</option>
+                </select>
+            </div>
+
+            <button onclick="castVote()" style="margin-top: 1rem; background: var(--accent); color: #0f172a;">SUBMIT
+                BALLOT</button>
+
+            <div id="log" class="status-log" style="min-height: 20px;"></div>
+        </div>
+    </div>
+
+    <script>
+        async function castVote() {
+            const id = document.getElementById('voterId').value;
+            const content = document.getElementById('voteContent').value;
+            const btn = document.querySelector('button');
+            const log = document.getElementById('log');
+
+            // UI Feedback
+            btn.disabled = true;
+            btn.innerText = "Encrypting & Sending...";
+            log.innerText = "";
+
+            try {
+                const res = await fetch('/vote', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, content })
+                });
+
+                const data = await res.json();
+
+                if (data.status.includes("SUCCESS")) {
+                    log.style.color = "var(--accent)";
+                    log.innerText = "✔ Vote Verified & Recorded on Blockchain";
+                    // Auto-increment for next voter
+                    setTimeout(() => {
+                        document.getElementById('voterId').value = parseInt(id) + 1;
+                        btn.disabled = false;
+                        btn.innerText = "SUBMIT BALLOT";
+                        log.innerText = "";
+                    }, 2000);
+                } else {
+                    log.style.color = "#ef4444";
+                    log.innerText = "❌ Error: Voter ID already used!";
+                    btn.disabled = false;
+                    btn.innerText = "SUBMIT BALLOT";
+                }
+            } catch (e) {
+                log.innerText = "Connection Error";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

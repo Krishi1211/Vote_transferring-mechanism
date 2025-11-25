@@ -1,0 +1,12 @@
+# Build Artifacts
+*.exe
+*.o
+__pycache__/
+
+# Runtime Data (Blockchain persistence)
+*.dat
+
+# System/IDE
+.gemini/
+.vscode/
+.idea/
