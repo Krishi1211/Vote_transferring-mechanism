@@ -1,5 +1,10 @@
 import requests
+import os
 from flask import Flask, jsonify, send_from_directory
+
+# Get the project root directory
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+DASHBOARD_DIR = os.path.join(PROJECT_ROOT, 'web', 'dashboard')
 
 app = Flask(__name__)
 
@@ -9,7 +14,7 @@ VOTING_NODE_URL = "http://localhost:5000"
 @app.route('/')
 def index():
     # Serve the Dashboard UI
-    return send_from_directory('.', 'dashboard.html')
+    return send_from_directory(DASHBOARD_DIR, 'dashboard.html')
 
 @app.route('/status_proxy', methods=['GET'])
 def status_proxy():

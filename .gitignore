@@ -1,12 +1,52 @@
 # Build Artifacts
 *.exe
 *.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+bin/
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+*.egg
 
 # Runtime Data (Blockchain persistence)
 *.dat
+*.log
 
-# System/IDE
+# IDE / Editors
 .gemini/
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS Files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+*.bak

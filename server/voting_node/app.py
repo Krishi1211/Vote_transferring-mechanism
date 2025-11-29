@@ -1,16 +1,22 @@
 import subprocess
 import threading
 import time
-from flask import Flask, request, jsonify, send_from_directory
 import os
+from flask import Flask, request, jsonify, send_from_directory
 
-app = Flask(__name__, static_folder='static')
+# Get the project root directory
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+BIN_DIR = os.path.join(PROJECT_ROOT, 'bin')
+WEB_DIR = os.path.join(PROJECT_ROOT, 'web', 'voting_booth')
+
+app = Flask(__name__)
 
 # Global process handler
 class VoteSystemProcess:
     def __init__(self):
+        exe_path = os.path.join(BIN_DIR, 'SecureVoteSystem.exe')
         self.process = subprocess.Popen(
-            ['./SecureVoteSystem.exe', '--interactive'],
+            [exe_path, '--interactive'],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -33,7 +39,7 @@ system = VoteSystemProcess()
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory(WEB_DIR, 'index.html')
 
 @app.route('/vote', methods=['POST'])
 def vote():
