@@ -11,48 +11,71 @@
             --card: #1e293b;
             --primary: #3b82f6;
             --accent: #10b981;
+            --danger: #ef4444;
             --text: #f8fafc;
             --text-dim: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 2rem;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
-        }
-
-        h1 {
-            font-weight: 800;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
+            padding: 2rem;
         }
 
         .container {
             width: 100%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
+            max-width: 450px;
         }
 
-        .control-panel {
+        .card {
             background: var(--card);
-            padding: 1.5rem;
+            padding: 2.5rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            height: fit-content;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
         }
 
         .input-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         label {
@@ -60,232 +83,212 @@
             color: var(--text-dim);
             margin-bottom: 0.5rem;
             font-size: 0.875rem;
+            font-weight: 500;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.875rem;
             background: var(--bg);
             border: 1px solid #334155;
             border-radius: 0.5rem;
-            color: white;
-            box-sizing: border-box;
+            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
         button {
             width: 100%;
-            padding: 0.75rem;
+            padding: 1rem;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 0.5rem;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
         }
 
-        button:hover {
-            opacity: 0.9;
+        button:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
         }
 
-        .shards-view {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
-        .shard-column {
-            background: var(--card);
-            border-radius: 1rem;
-            padding: 1rem;
-            min-height: 400px;
+        button.secondary {
+            background: transparent;
+            border: 1px solid #334155;
+            color: var(--text-dim);
         }
 
-        .shard-header {
-            text-align: center;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #334155;
+        button.secondary:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #475569;
         }
 
-        .block {
-            background: #334155;
-            padding: 0.75rem;
+        .message {
+            padding: 0.875rem;
             border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.75rem;
-            font-family: monospace;
-            border-left: 3px solid var(--primary);
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-10px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .status-log {
             margin-top: 1rem;
+            font-size: 0.875rem;
+            display: none;
+        }
 
-            < !DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Secure Vote-Transfer System</title><style> :root {
-                --bg: #0f172a;
-                --card: #1e293b;
-                --primary: #3b82f6;
-                --accent: #10b981;
-                --text: #f8fafc;
-                --text-dim: #94a3b8;
-            }
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
 
-            body {
-                font-family: 'Inter', system-ui, sans-serif;
-                background-color: var(--bg);
-                color: var(--text);
-                margin: 0;
-                padding: 2rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                min-height: 100vh;
-            }
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
 
-            h1 {
-                font-weight: 800;
-                background: linear-gradient(to right, var(--primary), var(--accent));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                margin-bottom: 2rem;
-            }
+        .message.show {
+            display: block;
+        }
 
-            .container {
-                width: 100%;
-                max-width: 1200px;
-                display: grid;
-                grid-template-columns: 300px 1fr;
-                gap: 2rem;
-            }
+        .toggle-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+        }
 
-            .control-panel {
-                background: var(--card);
-                padding: 1.5rem;
-                border-radius: 1rem;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                height: fit-content;
-            }
+        .toggle-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
-            .input-group {
-                margin-bottom: 1rem;
-            }
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
 
-            label {
-                display: block;
-                color: var(--text-dim);
-                margin-bottom: 0.5rem;
-                font-size: 0.875rem;
-            }
+        .hidden {
+            display: none !important;
+        }
 
-            input {
-                width: 100%;
-                padding: 0.75rem;
-                background: var(--bg);
-                border: 1px solid #334155;
-                border-radius: 0.5rem;
-                color: white;
-                box-sizing: border-box;
-            }
+        .user-info {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
 
-            button {
-                width: 100%;
-                padding: 0.75rem;
-                background: var(--primary);
-                color: white;
-                border: none;
-                border-radius: 0.5rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: opacity 0.2s;
-            }
+        .user-info p {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-bottom: 0.25rem;
+        }
 
-            button:hover {
-                opacity: 0.9;
-            }
+        .user-info strong {
+            color: var(--text);
+        }
 
-            .shards-view {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1rem;
-            }
+        .logout-btn {
+            background: var(--danger);
+            margin-top: 1.5rem;
+        }
 
-            .shard-column {
-                background: var(--card);
-                border-radius: 1rem;
-                padding: 1rem;
-                min-height: 400px;
-            }
-
-            .shard-header {
-                text-align: center;
-                font-weight: 600;
-                color: var(--accent);
-                margin-bottom: 1rem;
-                padding-bottom: 0.5rem;
-                border-bottom: 1px solid #334155;
-            }
-
-            .block {
-                background: #334155;
-                padding: 0.75rem;
-                border-radius: 0.5rem;
-                margin-bottom: 0.5rem;
-                font-size: 0.75rem;
-                font-family: monospace;
-                border-left: 3px solid var(--primary);
-                animation: slideIn 0.3s ease-out;
-            }
-
-            @keyframes slideIn {
-                from {
-                    transform: translateY(-10px);
-                    opacity: 0;
-                }
-
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
-            }
-
-            .status-log {
-                margin-top: 1rem;
-                color: var(--text-dim);
-                font-size: 0.875rem;
-            }
+        .logout-btn:hover {
+            background: #dc2626;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container"
-        style="display: flex; justify-content: center; align-items: center; height: 100vh; grid-template-columns: 1fr;">
-        <div class="control-panel" style="width: 100%; max-width: 400px; text-align: center;">
-            <h1 style="margin-bottom: 0.5rem;">Official Ballot</h1>
-            <p style="color: var(--text-dim); margin-bottom: 2rem;">Secure Blockchain Voting System</p>
-
-            <div class="input-group" style="text-align: left;">
-                <label>Voter ID</label>
-                <input type="number" id="voterId" value="1001">
+    <div class="container">
+        <!-- Login Form -->
+        <div id="loginForm" class="card">
+            <h1>🔒 Secure Login</h1>
+            <p class="subtitle">Blockchain-Based Voting System</p>
+            <div class="security-badge">
+                <span>🛡️</span>
+                <span>JWT Authentication • AES-256 Encryption</span>
             </div>
-            <div class="input-group" style="text-align: left;">
-                <label>Select Candidate</label>
-                <select id="voteContent"
-                    style="width: 100%; padding: 0.75rem; background: var(--bg); border: 1px solid #334155; border-radius: 0.5rem; color: white;">
+
+            <div class="input-group">
+                <label for="loginEmail">Email Address</label>
+                <input type="email" id="loginEmail" placeholder="your.email@example.com" autocomplete="email">
+            </div>
+
+            <div class="input-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password"
+                    autocomplete="current-password">
+            </div>
+
+            <button onclick="login()">Login</button>
+
+            <div id="loginMessage" class="message"></div>
+
+            <div class="toggle-link">
+                Don't have an account? <a onclick="showRegister()">Register here</a>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="registerForm" class="card hidden">
+            <h1>📝 Register</h1>
+            <p class="subtitle">Create Your Voter Account</p>
+
+            <div class="input-group">
+                <label for="regName">Full Name</label>
+                <input type="text" id="regName" placeholder="John Doe">
+            </div>
+
+            <div class="input-group">
+                <label for="regEmail">Email Address</label>
+                <input type="email" id="regEmail" placeholder="your.email@example.com" autocomplete="email">
+            </div>
+
+            <div class="input-group">
+                <label for="regPassword">Password (min 8 characters)</label>
+                <input type="password" id="regPassword" placeholder="Create a strong password"
+                    autocomplete="new-password">
+            </div>
+
+            <button onclick="register()">Create Account</button>
+
+            <div id="registerMessage" class="message"></div>
+
+            <div class="toggle-link">
+                Already have an account? <a onclick="showLogin()">Login here</a>
+            </div>
+        </div>
+
+        <!-- Voting Form -->
+        <div id="votingForm" class="card hidden">
+            <h1>🗳️ Official Ballot</h1>
+            <p class="subtitle">Cast Your Secure Vote</p>
+
+            <div class="user-info">
+                <p><strong>Voter:</strong> <span id="userEmail"></span></p>
+                <p><strong>Status:</strong> <span id="voteStatus">Ready to vote</span></p>
+            </div>
+
+            <div class="input-group">
+                <label for="voteContent">Select Your Candidate</label>
+                <select id="voteContent">
+                    <option value="">-- Choose a candidate --</option>
                     <option value="Candidate A">Candidate A</option>
                     <option value="Candidate B">Candidate B</option>
                     <option value="Candidate C">Candidate C</option>
@@ -296,54 +299,192 @@
                 </select>
             </div>
 
-            <button onclick="castVote()" style="margin-top: 1rem; background: var(--accent); color: #0f172a;">SUBMIT
-                BALLOT</button>
+            <button onclick="castVote()" id="voteButton">Submit Ballot</button>
 
-            <div id="log" class="status-log" style="min-height: 20px;"></div>
+            <div id="voteMessage" class="message"></div>
+
+            <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
     </div>
 
     <script>
-        async function castVote() {
-            const id = document.getElementById('voterId').value;
-            const content = document.getElementById('voteContent').value;
-            const btn = document.querySelector('button');
-            const log = document.getElementById('log');
+        // Check if user is already logged in
+        window.onload = function () {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                checkAuth();
+            }
+        };
 
-            // UI Feedback
-            btn.disabled = true;
-            btn.innerText = "Encrypting & Sending...";
-            log.innerText = "";
+        function showMessage(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = `message ${type} show`;
+            setTimeout(() => el.classList.remove('show'), 5000);
+        }
+
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('votingForm').classList.add('hidden');
+        }
+
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('votingForm').classList.add('hidden');
+        }
+
+        function showVoting(email, hasVoted) {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('votingForm').classList.remove('hidden');
+
+            document.getElementById('userEmail').textContent = email;
+
+            if (hasVoted) {
+                document.getElementById('voteStatus').textContent = '✅ Already voted';
+                document.getElementById('voteButton').disabled = true;
+                document.getElementById('voteContent').disabled = true;
+                showMessage('voteMessage', 'You have already cast your vote. Thank you for participating!', 'success');
+            }
+        }
+
+        async function register() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+
+            if (!name || !email || !password) {
+                showMessage('registerMessage', 'All fields are required', 'error');
+                return;
+            }
+
+            if (password.length < 8) {
+                showMessage('registerMessage', 'Password must be at least 8 characters', 'error');
+                return;
+            }
 
             try {
-                const res = await fetch('/vote', {
+                const res = await fetch('/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id, content })
+                    body: JSON.stringify({ email, password, full_name: name })
                 });
 
                 const data = await res.json();
 
-                if (data.status.includes("SUCCESS")) {
-                    log.style.color = "var(--accent)";
-                    log.innerText = "✔ Vote Verified & Recorded on Blockchain";
-                    // Auto-increment for next voter
-                    setTimeout(() => {
-                        document.getElementById('voterId').value = parseInt(id) + 1;
-                        btn.disabled = false;
-                        btn.innerText = "SUBMIT BALLOT";
-                        log.innerText = "";
-                    }, 2000);
+                if (res.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    showMessage('registerMessage', 'Registration successful! Redirecting...', 'success');
+                    setTimeout(() => showVoting(email, false), 1500);
                 } else {
-                    log.style.color = "#ef4444";
-                    log.innerText = "❌ Error: Voter ID already used!";
-                    btn.disabled = false;
-                    btn.innerText = "SUBMIT BALLOT";
+                    showMessage('registerMessage', data.error || 'Registration failed', 'error');
                 }
             } catch (e) {
-                log.innerText = "Connection Error";
-                btn.disabled = false;
+                showMessage('registerMessage', 'Connection error. Please try again.', 'error');
             }
+        }
+
+        async function login() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showMessage('loginMessage', 'Email and password are required', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    showMessage('loginMessage', 'Login successful! Redirecting...', 'success');
+                    setTimeout(() => showVoting(email, data.has_voted), 1500);
+                } else {
+                    showMessage('loginMessage', data.error || 'Login failed', 'error');
+                }
+            } catch (e) {
+                showMessage('loginMessage', 'Connection error. Please try again.', 'error');
+            }
+        }
+
+        async function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                showLogin();
+                return;
+            }
+
+            try {
+                const res = await fetch('/profile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    showVoting(data.email, data.has_voted);
+                } else {
+                    localStorage.removeItem('authToken');
+                    showLogin();
+                }
+            } catch (e) {
+                showLogin();
+            }
+        }
+
+        async function castVote() {
+            const content = document.getElementById('voteContent').value;
+            const token = localStorage.getItem('authToken');
+
+            if (!content) {
+                showMessage('voteMessage', 'Please select a candidate', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('voteButton');
+            btn.disabled = true;
+            btn.textContent = 'Encrypting & Submitting...';
+
+            try {
+                const res = await fetch('/vote', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ content })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    showMessage('voteMessage', '✅ Vote successfully recorded on blockchain! Your vote has been encrypted and stored securely.', 'success');
+                    document.getElementById('voteStatus').textContent = '✅ Already voted';
+                    document.getElementById('voteContent').disabled = true;
+                } else {
+                    showMessage('voteMessage', data.error || 'Failed to cast vote', 'error');
+                    btn.disabled = false;
+                    btn.textContent = 'Submit Ballot';
+                }
+            } catch (e) {
+                showMessage('voteMessage', 'Connection error. Please try again.', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Submit Ballot';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            showLogin();
+            showMessage('loginMessage', 'Logged out successfully', 'success');
         }
     </script>
 </body>

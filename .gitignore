@@ -32,6 +32,18 @@ dist/
 *.dat
 *.log
 
+# Security & Secrets (NEVER COMMIT!)
+.env
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+voters.db
+voters.db-journal
+*.sqlite
+*.sqlite3
+
 # IDE / Editors
 .gemini/
 .vscode/

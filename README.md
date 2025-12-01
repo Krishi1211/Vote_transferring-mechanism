@@ -1,40 +1,6 @@
 # Secure Vote-Transfer System
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](CHANGELOG.md)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![C++](https://img.shields.io/badge/C++-20-00599C.svg)](https://isocpp.org/)
-[![Python](https://img.shields.io/badge/Python-3.7+-3776AB.svg)](https://www.python.org/)
-
-A blockchain-based voting system implementing secure vote transfer mechanisms with sharding, cryptographic packet protection, and real-time monitoring capabilities.
-
-## 🎯 Overview
-
-This project implements an end-to-end secure voting system that leverages blockchain technology and sharding to ensure vote integrity, anonymity, and scalability. The system features a dedicated voting interface for voters and a separate monitoring dashboard for administrators.
-
-## ✨ Key Features
-
-- **Blockchain-Based Ledger**: Immutable vote storage with cryptographic hashing
-- **Sharding Architecture**: Distributed vote processing across multiple blockchain shards for scalability
-- **Secure Packet Encryption**: 1024-byte secure packets with random padding for anonymity
-- **Dual Interface Design**:
-  - Clean voting booth interface for voters
-  - Real-time monitoring dashboard for administrators
-- **Vote Deduplication**: Prevents double-voting by tracking voter IDs
-- **Persistent Storage**: Votes are saved to disk for reliability
-- **Real-time Updates**: Live blockchain visualization and vote tallying
-
-## 🏗️ Architecture
-
-### Components
-
-1. **Voting Node (Backend)** - `server/voting_node/app.py`
-   - Handles vote submission and validation
-   - Routes votes to appropriate blockchain shards
-   - Provides REST API endpoints
-
-2. **Observer Node (Dashboard)** - `server/observer_node/display_server.py`
-   - Real-time monitoring interface
-   - Displays blockchain shard status
+[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](CHANGELOG.md)
    - Shows vote tallies and system statistics
 
 3. **C++ Core Engine** - `cpp/src/` and `cpp/include/`
@@ -62,10 +28,10 @@ This project implements an end-to-end secure voting system that leverages blockc
 
 ### Prerequisites
 
-- **Python 3.7+** with Flask and requests
-- **CMake 3.10+**
-- **C++ Compiler** with C++20 support (MSVC, GCC, or Clang)
-- **OS**: Windows, Linux, or macOS
+- **Python 3.7+**
+- **C++ Compiler** (GCC, MSVC, or Clang) with C++17+ support
+- **Git** (for cloning)
+- **pip** (Python package manager)
 
 ### Installation
 
@@ -81,22 +47,37 @@ This project implements an end-to-end secure voting system that leverages blockc
    pip install -r requirements.txt
    ```
 
-3. **Build the C++ components**
+3. **Generate security keys**
    ```bash
-   cd cpp
-   mkdir build
-   cd build
-   cmake ..
-   cmake --build .
+   cd ../../scripts
+   python generate_keys.py
    ```
-   
-   The executable will be created in the `bin/` directory.
+   Copy the output to a new `.env` file in the project root.
 
-### Running the System
+4. **Build the C++ components** (if not already built)
+   ```bash
+   cd ../cpp
+   g++ -std=c++17 -Iinclude -o ../bin/SecureVoteSystem.exe \
+     src/main.cpp src/client/*.cpp src/core/*.cpp src/network/*.cpp
+   ```
 
-#### Quick Start (Recommended)
+### Running the Secure System
 
-Simply run the automated startup script:
+#### Option 1: Manual Start (Recommended for Development)
+
+1. **Start the Voting Node**
+   ```bash
+   cd server/voting_node
+   python app.py
+   ```
+   Server will start on `http://localhost:5000`
+
+2. **Access the voting interface**
+   - Open browser: **http://localhost:5000**
+   - Register a new account
+   - Login and cast your vote!
+
+#### Option 2: Automated Script
 
 **Windows**:
 ```bash
@@ -309,19 +290,29 @@ This will simulate 10 votes and display the shard distribution.
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the project
 - **[Changelog](CHANGELOG.md)** - Version history and release notes
 
-## 🤝 Contributing
+## 🤝 About This Project
 
-We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) for details on:
-- Code of conduct
-- Development workflow
-- Coding standards
-- Pull request process
+**Academic Project**: This system was developed as part of ECS 235A (Computer and Information Security) coursework at UC Davis.
 
-This project was developed as part of ECS 235A coursework. For academic integrity, please do not copy directly for coursework submissions.
+**Purpose**: To demonstrate understanding of:
+- Blockchain technology and cryptographic security
+- Secure authentication and authorization
+- Production-level security practices
+- System architecture and design
+
+**Academic Integrity Notice**: 
+- ⚠️ **Do not copy this code for your own coursework submissions**
+- ✅ Feel free to use as a learning reference
+- ✅ Study the implementation for educational purposes
+- ✅ Use concepts and ideas in your own original work
+
+**For Contributions**: While this is primarily an academic project, suggestions and feedback are welcome for learning purposes.
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+**Note**: While the code is open source under MIT License, please respect academic integrity policies if you're a student.
 
 ## 👥 Authors
 
